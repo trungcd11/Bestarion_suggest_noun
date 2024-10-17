@@ -8,15 +8,15 @@ from sklearn.preprocessing import LabelEncoder
 import re
 from nltk.corpus import stopwords
 # from nltk import word_tokenize
-from keras.preprocessing import image
-from keras.applications.vgg16 import VGG16
-from keras.applications.inception_v3 import InceptionV3
-from keras.applications.vgg16 import preprocess_input
-from keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.applications.vgg16 import VGG16
+from tensorflow.keras.applications.inception_v3 import InceptionV3
+from tensorflow.keras.applications.vgg16 import preprocess_input
+from tensorflow.keras.preprocessing.text import Tokenizer
 import numpy as np
-from keras.layers import Dense, GlobalAveragePooling2D, Embedding, LSTM, multiply
-from keras.models import Model
-from keras import preprocessing, Input
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Embedding, LSTM, multiply
+from tensorflow.keras.models import Model
+from tensorflow.keras import preprocessing, Input
 import os
 import itertools
 import numpy as np
