@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
 
 
 import pandas as pd
@@ -9,22 +8,20 @@ from sklearn.preprocessing import LabelEncoder
 import re
 from nltk.corpus import stopwords
 # from nltk import word_tokenize
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.vgg16 import VGG16
-from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.applications.vgg16 import preprocess_input
-from tensorflow.keras.preprocessing.text import Tokenizer
+from keras.preprocessing import image
+from keras.applications.vgg16 import VGG16
+from keras.applications.inception_v3 import InceptionV3
+from keras.applications.vgg16 import preprocess_input
+from keras.preprocessing.text import Tokenizer
 import numpy as np
-from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Embedding, LSTM, multiply
-from tensorflow.keras.models import Model
-from tensorflow.keras import preprocessing, Input
+from keras.layers import Dense, GlobalAveragePooling2D, Embedding, LSTM, multiply
+from keras.models import Model
+from keras import preprocessing, Input
 import os
 import itertools
 import numpy as np
 from PIL import Image, ImageFile
 
-
-# In[2]:
 
 
 STOPWORDS = set(stopwords.words('english'))
@@ -34,25 +31,8 @@ EMAIL = re.compile('^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')
 # NUMBERS = re.compile(['0-9'])
 STOPWORDS = set(stopwords.words('english'))
 
-
-# In[3]:
-
-
-Training_path = "E:\\MSc DA\\Sem 2\\Project\\Code and Docmentation\\Final Dataset\\Split Dataset\\Training_meme_dataset.csv"
-Validation_path = "E:\\MSc DA\\Sem 2\\Project\\Code and Docmentation\\Final Dataset\\Split Dataset\\Validation_meme_dataset.csv"
-Testing_path = "E:\\MSc DA\\Sem 2\\Project\\Code and Docmentation\\Final Dataset\\Split Dataset\\Testing_meme_dataset.csv"
-img_dir = "E:\\MSc DA\\Sem 2\\Project\\Code and Docmentation\\Final Dataset\\Labelled Images"
-
-
-# In[4]:
-
-
 # For vectors
 maxlen = 1000
-
-
-# In[5]:
-
 
 def encode_label(DataFrame, Label_col):
     t_y = DataFrame[Label_col].values
@@ -77,47 +57,18 @@ def clean_text(text):
     return text
 
 
-# In[6]:
-
 
 def create_img_array(img_dirct):
     all_imgs = []
     for root, j, files in os.walk(img_dirct):
         for file in files:
-            file = root + '\\' + file
+            file = root + '/' + file
             all_imgs.append(file)
     return all_imgs
 
 def create_img_path(DF, Col_name, img_dir):
-    img_path = [img_dir + '\\' + name for name in DF[Col_name]]
+    img_path = [img_dir + '/' + name for name in DF[Col_name]]
     return img_path
-
-
-# In[7]:
-
-
-def preprocess_text(Training_path,Validation_path, Testing_path):
-    # function to preprocess input
-    training_DF = pd.read_csv(Training_path, sep = ',')
-    validation_DF = pd.read_csv(Validation_path, sep = ',')
-    testing_DF = pd.read_csv(Testing_path, sep = ',')
-
-    # encoding all the labels 
-    encode_label(testing_DF,'label')
-    encode_label(training_DF, 'label')
-    encode_label(validation_DF, 'label')
-
-    clean_text(training_DF['sentence'][0])
-
-    # Processing the text
-    training_DF['sentence'] = training_DF['sentence'].apply(clean_text)
-    testing_DF['sentence'] = testing_DF['sentence'].apply(clean_text)
-    validation_DF['sentence'] = validation_DF['sentence'].apply(clean_text)
-
-    return training_DF, testing_DF, validation_DF
-
-
-# In[8]:
 
 
 # Function that returns image reading from the path
@@ -132,9 +83,9 @@ def get_input(path):
 # returns an array of labels
 def get_output(path,label_file=None):
     # Spliting the path and take out the image id    
-    filename = path.split('\\')[-1]
+    filename = path.split('/')[-1]
     # Taking list of labels
-    labels = list(label_file[label_file['image_name'] == filename]['label'].values)
+    labels = list(label_file[label_file['ImageName'] == filename]['NOUN'].values)
     # for duplicate selecting labels
     if len(labels) <= 2:
         label = labels[0]
